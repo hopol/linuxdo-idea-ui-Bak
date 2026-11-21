@@ -1214,6 +1214,43 @@ color: #7AA3D6;
 }
 
 
+    /* ---------- 聊天水印：背景平铺斜排文字（文字/间距/透明度可调） ---------- */
+    .__ROOT_CLASS__.im-watermark-on .im-chat-body {
+      background-image: var(--im-wm-image);
+      background-repeat: repeat;
+      background-size: var(--im-wm-size);
+    }
+    .__ROOT_CLASS__ .im-wm-pop {
+      position: fixed; z-index: 1300; width: 260px;
+      border-radius: 12px; background: var(--im-bg); border: 1px solid var(--im-border);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18); padding: 12px 14px;
+      color: var(--im-text); font-size: 12.5px; font-family: var(--im-font);
+    }
+    .__ROOT_CLASS__ .im-wm-row { display: flex; align-items: center; justify-content: space-between; }
+    .__ROOT_CLASS__ .im-wm-label { font-weight: 600; }
+    .__ROOT_CLASS__ .im-wm-switch { position: relative; width: 34px; height: 18px; flex: none; }
+    .__ROOT_CLASS__ .im-wm-switch input { position: absolute; opacity: 0; }
+    .__ROOT_CLASS__ .im-wm-switch span {
+      display: block; width: 34px; height: 18px; border-radius: 10px;
+      background: var(--im-border); cursor: pointer; transition: background 0.15s;
+    }
+    .__ROOT_CLASS__ .im-wm-switch span::after {
+      content: ""; position: absolute; top: 3px; left: 3px; width: 12px; height: 12px;
+      border-radius: 50%; background: #fff; transition: transform 0.15s;
+    }
+    .__ROOT_CLASS__ .im-wm-switch input:checked + span { background: var(--im-accent); }
+    .__ROOT_CLASS__ .im-wm-switch input:checked + span::after { transform: translateX(16px); }
+    .__ROOT_CLASS__ .im-wm-field { display: flex; flex-direction: column; gap: 5px; margin-top: 12px; }
+    .__ROOT_CLASS__ .im-wm-field > span { color: var(--im-text-2); font-size: 11.5px; }
+    .__ROOT_CLASS__ .im-wm-field b { color: var(--im-accent); font-weight: 600; }
+    .__ROOT_CLASS__ .im-wm-field input[type="text"] {
+      height: 28px; padding: 3px 8px; border-radius: 6px;
+      border: 1px solid var(--im-border); background: var(--im-bg); color: var(--im-text);
+      font-size: 12.5px; font-family: var(--im-font); outline: none;
+    }
+    .__ROOT_CLASS__ .im-wm-field input[type="text"]:focus { border-color: var(--im-accent); }
+    .__ROOT_CLASS__ .im-wm-field input[type="range"] { width: 100%; accent-color: var(--im-accent); }
+
     /* ---------- 图片防剧透：模糊默认，点击显示 ---------- */
     .__ROOT_CLASS__ .im-msg-bubble img {
       transition: filter 0.25s ease;
@@ -1222,6 +1259,21 @@ color: #7AA3D6;
       filter: blur(14px) saturate(0.7);
       cursor: pointer;
     }
+
+    /* ---------- 超长代码块兜底：气泡内滚动，禁止撑出面板 ---------- */
+    .__ROOT_CLASS__ .im-msg-bubble { min-width: 0; }
+    .__ROOT_CLASS__ .im-msg-bubble pre,
+    .__ROOT_CLASS__ .im-msg-bubble [data-code-wrap] {
+      /* 气泡是收缩宽度，百分比行不通：按聊天面板可用宽度（视口宽 - 导航/侧栏/中栏 - 头像与内边距）封顶 */
+      max-width: calc(100vw - var(--im-nav, 0px) - var(--im-nav2w, 0px) - var(--im-strip, 0px) - var(--im-list, 0px) - 140px);
+      overflow-x: auto;
+    }
+    .__ROOT_CLASS__ .im-msg-bubble table {
+      display: block;
+      max-width: calc(100vw - var(--im-nav, 0px) - var(--im-nav2w, 0px) - var(--im-strip, 0px) - var(--im-list, 0px) - 140px);
+      overflow-x: auto;
+    }
+    .__ROOT_CLASS__ .im-chat-body { overflow-x: hidden; }
 
     /* ---------- 钉钉式图片浮窗灯箱 ---------- */
     .__ROOT_CLASS__ .im-img-modal {
